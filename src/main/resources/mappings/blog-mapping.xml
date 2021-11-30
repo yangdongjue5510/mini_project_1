@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BlogDAO">
+
+    <resultMap type="BlogVO" id="blogResult">
+        <id     property="blogId"          column="BLOG_ID" />
+        <result property="title"            column="TITLE" />
+        <result property="tag"              column="TAG" />
+        <result property="cntDisplayPost" column="CNT_DISPLAY_POST" />
+        <result property="status"           column="STATUS" />
+        <association property="user" javaType="UserVO">
+            <result property="userId" column="USER_ID" />
+            <result property="id" column="ID" />
+            <result property="userName" column="USER_NAME" />
+            <result property="role" column="ROLE" />
+        </association>
+    </resultMap>
+
+    <select id="getUserBlog" resultMap="blogResult">
+        SELECT BLOG.*, USER.*
+        FROM BLOG_USER USER
+                 INNER JOIN BLOG BLOG
+                            ON USER.USER_ID = BLOG.USER_ID
+        WHERE BLOG.USER_ID = #{ userId }
+    </select>
+
+    <select id="getBlogs" resultMap="blogResult">
+        SELECT BLOG.*, USER.*
+        FROM BLOG_USER USER
+                 INNER JOIN BLOG BLOG
+                            ON USER.USER_ID = BLOG.USER_ID
+    </select>
+
+    <select id="getBlog" resultMap="blogResult">
+        SELECT BLOG.*, USER.*
+        FROM BLOG_USER USER
+                 INNER JOIN BLOG BLOG
+                            ON USER.USER_ID = BLOG.USER_ID
+        WHERE BLOG.BLOG_ID = #{ blogId }
+    </select>
+
+    <select id="searchBlogByTitle" resultMap="blogResult">
+        SELECT BLOG.*, USER.*
+        FROM BLOG_USER USER
+                 INNER JOIN BLOG BLOG
+                            ON USER.USER_ID = BLOG.USER_ID
+        WHERE BLOG.TITLE LIKE '%' || #{ searchValue } || '%'
+    </select>
+
+    <select id="searchBlogByTag" resultMap="blogResult">
+        SELECT BLOG.*, USER.*
+        FROM BLOG_USER USER
+                 INNER JOIN BLOG BLOG
+                            ON USER.USER_ID = BLOG.USER_ID
+        WHERE BLOG.TAG LIKE '%' || #{ searchValue } || '%'
+    </select>
+
+    <select id="searchBlogByUser" resultMap="blogResult">
+        SELECT BLOG.*, USER.*
+        FROM BLOG_USER USER
+                 INNER JOIN BLOG BLOG
+                            ON USER.USER_ID = BLOG.USER_ID
+        WHERE USER.USER_NAME LIKE '%' || #{ searchValue } || '%'
+    </select>
+
+    <insert id="createBlog">
+        INSERT INTO BLOG(USER_ID, TITLE, TAG, CNT_DISPLAY_POST, STATUS)
+        VALUES (#{ user.userId }, #{ title }, #{ tag }, #{ cntDisplayPost }, #{ status })
+    </insert>
+
+    <update id="updateBlog">
+        UPDATE BLOG
+        SET TITLE = #{ title }, TAG = #{ tag }
+        WHERE BLOG_ID = #{ blogId }
+    </update>
+
+    <delete id="deleteBlog">
+        DELETE FROM BLOG
+        WHERE BLOG_ID = #{ blogId }
+    </delete>
+
+    <update id="deleteRequest">
+        UPDATE BLOG
+        SET STATUS = '삭제요청'
+        WHERE BLOG_ID = #{ blogId }
+    </update>
+
+</mapper>

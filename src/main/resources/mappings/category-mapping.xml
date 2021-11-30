@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="categoryDAO">
+
+    <resultMap id="category" type="CategoryVO">
+        <id property="categoryId" column="CATEGORY_ID" />
+        <result property="categoryName" column="CATEGORY_NAME" />
+        <result property="displayType" column="DISPLAY_TYPE" />
+        <result property="cntDisplayPost" column="CNT_DISPLAY_POST" />
+        <result property="description" column="DESCRIPTION" />
+        <result property="createdDate" column="CREATED_DATE" />
+        <result property="modifiedDate" column="MODIFIED_DATE" />
+        <association property="blog" javaType="BlogVO">
+            <id     property="blogId"          column="BLOG_ID" />
+            <result property="title"            column="TITLE" />
+            <result property="tag"              column="TAG" />
+            <result property="cntDisplayPost" column="CNT_DISPLAY_POST" />
+            <result property="status"           column="STATUS" />
+        </association>
+    </resultMap>
+
+    <select id="getCategorys" parameterType="BlogVO" resultMap="category">
+        SELECT *
+          FROM CATEGORY CATE
+         INNER JOIN BLOG BLOG
+            ON CATE.BLOG_ID = BLOG.BLOG_ID
+         WHERE CATE.BLOG_ID = #{ blogId }
+    </select>
+
+    <select id="getCategory" resultMap="category">
+        SELECT *
+          FROM CATEGORY
+         WHERE CATEGORY_ID = #{ categoryId }
+    </select>
+
+    <insert id="insertCategory" parameterType="CategoryVO">
+        INSERT INTO CATEGORY(BLOG_ID, CATEGORY_NAME, DISPLAY_TYPE, CNT_DISPLAY_POST, DESCRIPTION, CREATED_DATE, MODIFIED_DATE)
+        VALUES (#{ blog.blogId }, #{ categoryName }, #{ displayType }, #{ cntDisplayPost }, #{ description }, SYSDATE, SYSDATE)
+    </insert>
+
+    <delete id="deleteCategory" parameterType="CategoryVO">
+        DELETE FROM CATEGORY
+              WHERE CATEGORY_ID = #{ categoryId }
+    </delete>
+
+    <update id="updateCategory" parameterType="CategoryVO">
+        UPDATE CATEGORY
+           SET CATEGORY_NAME = #{ categoryName },
+               DISPLAY_TYPE = #{ displayType },
+               CNT_DISPLAY_POST = #{ cntDisplayPost },
+               DESCRIPTION = #{ description }
+         WHERE CATEGORY_ID = #{ categoryId }
+    </update>
+
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PostDAO">
+
+    <resultMap id="post" type="PostVO">
+        <id property="postId" column="POST_ID" />
+        <result property="title" column="TITLE" />
+        <result property="content" column="CONTENT" />
+        <result property="createdDate" column="CREATED_DATE" />
+        <association property="category" javaType="CategoryVO">
+            <id property="categoryId" column="CATEGORY_ID" />
+            <result property="categoryName" column="CATEGORY_NAME" />
+            <result property="displayType" column="DISPLAY_TYPE" />
+            <result property="cntDisplayPost" column="CNT_DISPLAY_POST" />
+            <result property="description" column="DESCRIPTION" />
+            <result property="createdDate" column="CREATED_DATE" />
+            <result property="modifiedDate" column="MODIFIED_DATE" />
+        </association>
+    </resultMap>
+
+    <select id="getPost" resultMap="post">
+        SELECT * FROM POST WHERE POST_ID = #{ postId }
+    </select>
+
+    <select id="getPosts" resultMap="post">
+        SELECT P.*, C.*
+          FROM POST P
+         INNER JOIN CATEGORY C
+            ON P.CATEGORY_ID = C.CATEGORY_ID
+         INNER JOIN BLOG B
+            ON C.BLOG_ID = B.BLOG_ID
+         INNER JOIN BLOG_USER U
+            ON U.USER_ID = B.USER_ID
+         WHERE B.BLOG_ID = #{ blogId }
+         ORDER BY P.CREATED_DATE DESC
+    </select>
+
+    <insert id="insertPost">
+        INSERT INTO POST(CATEGORY_ID, TITLE, CONTENT, CREATED_DATE)
+             VALUES (#{ category.categoryId }, #{ title }, #{ content }, SYSDATE)
+    </insert>
+
+    <update id="updatePost">
+        UPDATE POST
+           SET CATEGORY_ID = #{ category.categoryId }, TITLE = #{ title }, CONTENT = #{ content }
+         WHERE POST_ID = #{ postId }
+    </update>
+
+    <delete id="deletePost">
+        DELETE FROM POST
+              WHERE POST_ID = #{ postId }
+    </delete>
+
+    <select id="searchPostByCategory" resultMap="post">
+        SELECT P.*, C.*
+          FROM POST P
+         INNER JOIN CATEGORY C
+            ON P.CATEGORY_ID = C.CATEGORY_ID
+         INNER JOIN BLOG B
+            ON C.BLOG_ID = B.BLOG_ID
+         INNER JOIN BLOG_USER U
+            ON U.USER_ID = B.USER_ID
+         WHERE B.BLOG_ID = #{ blog.blogId } AND C.CATEGORY_ID = #{ categoryId }
+         ORDER BY P.CREATED_DATE DESC
+    </select>
+
+</mapper>
