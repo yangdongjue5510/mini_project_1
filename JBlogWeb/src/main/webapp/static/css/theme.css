@@ -1,0 +1,45 @@
+/* Hyperlink Style */
+A:link 				{ font-size:9pt; font-family:"±¼¸²Ã¼"; }
+A:visited 			{ font-size:9pt; font-family:"±¼¸²Ã¼"; }
+A:active 			{ font-size:9pt; font-family:"±¼¸²Ã¼"; }
+A:hover 				{ font-size:9pt; font-family:"±¼¸²Ã¼"; } 
+ 
+A.title:link 			{ font-size:9pt; font-family:"±¼¸²Ã¼"; color:#696969; text-decoration:none; font-weight:bold; }
+A.title:visited 		{ font-size:9pt; font-family:"±¼¸²Ã¼"; color:#696969; text-decoration:none; font-weight:bold; }
+A.title:active 		{ font-size:9pt; font-family:"±¼¸²Ã¼"; color:#696969; text-decoration:none; font-weight:bold; }
+A.title:hover 		{ font-size:9pt; font-family:"±¼¸²Ã¼"; color:dc143c; text-decoration:none; font-weight:bold; }
+
+.td							{ background-color:#FFFFFF; font-size:9pt; font-family:"±¼¸²Ã¼"}
+.tdcontent				{ font-size:9pt; font-family:"±¼¸²Ã¼"; height:10px;}
+.tdcontentcenter	{ background-color:#FFFFFF; font-size:9pt; font-family:"Tahoma"; height:10px;text-align:center; }
+.tdcontentright		{ background-color:#FFFFFF; font-size:9pt; font-family:"Tahoma"; height:10px;text-align:right; }
+
+.blogtitle			{ font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+							font-weight: bold; font-size:30pt; color:#FFFFFF;text-align:center; }
+.blogtag			{ font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
+							font-size:9pt; color:#FFFFFF;text-align:center; }
+.blogfooter		{ font-size:9pt; font-family:"Tahoma"; height:10px;text-align:center; }							
+							
+.posttitle			{ font-size:14pt; color:#5A4EB1;font-weight: bold;height:24px; }
+.postdate			{ font-size:9pt; height:28px; }
+.postcontent		{ font-size:9pt; }
+.postwriter		{ font-size:9pt;text-align:right;height:10px; }
+
+.categorytitle		{ font-size:10pt;font-weight: bold;height:32px; }
+.categoryitem	{ font-size:9pt;height:18px; }
+
+.inputlabel		{ font-size:9pt;font-weight: bold;height:24px;text-align:right; }
+.inputtext			{ font-size:9pt;height:18px;margin-left:5px; }
+.inputtextarea   { font-size:9pt;margin-left:5px; }
+
+.tablelabel		{ font-size:9pt;font-weight: bold;height:24px;text-align:center; }
+.tablecontent	{ font-size:9pt; font-family:"±¼¸²Ã¼"; height:20px;}
+
+/*custom css*/
+.header {
+	position:relative;
+}
+
+.header .header-text {
+	position:absolute;
+}
